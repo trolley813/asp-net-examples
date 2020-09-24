@@ -10,29 +10,25 @@ namespace _20200921.Controllers
 {
     public class ItemsController : Controller
     {
-        public ItemsController()
+
+        public static List<Item> Items = new List<Item>
         {
-            Items = new List<Item>
+            new Item
             {
-                new Item
-                {
-                    Name = "Item 1",
-                    Description = "One",
-                    Price = 123.45m,
-                    Id = Guid.Parse("12345678-0000-0000-0000-000000000001")
+                Name = "Item 1",
+                Description = "One",
+                Price = 123.45m,
+                Id = Guid.Parse("12345678-0000-0000-0000-000000000001")
 
-                },
-                new Item
-                {
-                    Name = "Item 2",
-                    Description = "Two",
-                    Price = 678.90m,
-                    Id = Guid.Parse("12345678-0000-0000-0000-000000000002")
-                },
-            };
-        }
-
-        public List<Item> Items { get; private set; }
+            },
+            new Item
+            {
+                Name = "Item 2",
+                Description = "Two",
+                Price = 678.90m,
+                Id = Guid.Parse("12345678-0000-0000-0000-000000000002")
+            },
+        };
 
         // GET: Items
         public ActionResult Index()
@@ -60,7 +56,17 @@ namespace _20200921.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                string name = collection["Name"];
+                string description = collection["Description"];
+                decimal price = Decimal.Parse(collection["Price"]);
+                Item newItem = new Item
+                {
+                    Name = name,
+                    Description = description,
+                    Price = price,
+                    Id = Guid.NewGuid()
+                };
+                Items.Add(newItem);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -72,7 +78,7 @@ namespace _20200921.Controllers
         // GET: Items/Edit/5
         public ActionResult Edit(Guid id)
         {
-            return View();
+            return View(Items.Find(item => item.Id == id));
         }
 
         // POST: Items/Edit/5
@@ -83,7 +89,13 @@ namespace _20200921.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                string name = collection["Name"];
+                string description = collection["Description"];
+                decimal price = Decimal.Parse(collection["Price"]);
+                var itemToEdit = Items.Find(item => item.Id == id);
+                itemToEdit.Name = name;
+                itemToEdit.Description = description;
+                itemToEdit.Price = price;
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -95,7 +107,7 @@ namespace _20200921.Controllers
         // GET: Items/Delete/5
         public ActionResult Delete(Guid id)
         {
-            return View();
+            return View(Items.Find(item => item.Id == id));
         }
 
         // POST: Items/Delete/5
@@ -106,7 +118,7 @@ namespace _20200921.Controllers
             try
             {
                 // TODO: Add delete logic here
-
+                Items.RemoveAll(item => item.Id == id);
                 return RedirectToAction(nameof(Index));
             }
             catch
