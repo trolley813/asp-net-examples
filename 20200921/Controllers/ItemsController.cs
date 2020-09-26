@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using _20200921.Data;
 using _20200921.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,13 @@ namespace _20200921.Controllers
                 Id = Guid.Parse("12345678-0000-0000-0000-000000000002")
             },
         };
+
+        private StoreContext context;
+
+        public ItemsController(StoreContext context)
+        {
+            this.context = context;
+        }
 
         // GET: Items
         public ActionResult Index()

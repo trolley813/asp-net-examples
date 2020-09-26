@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Sqlite;
+using _20200921.Data;
+
 
 namespace _20200921
 {
@@ -33,6 +36,9 @@ namespace _20200921
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<StoreContext>(options =>
+                options.UseSqlite("Data Source=store.sqlite3"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
