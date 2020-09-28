@@ -6,6 +6,11 @@ namespace _20200921.Data
 {
     public class StoreContext : DbContext
     {
+        public StoreContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
         public DbSet<Item> Items { get; set; }
     }
 }

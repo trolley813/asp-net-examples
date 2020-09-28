@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using _20200921.Data;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace _20200921
 {
