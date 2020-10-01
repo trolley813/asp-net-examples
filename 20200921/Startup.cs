@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore.Sqlite;
 using _20200921.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace _20200921
 {
@@ -36,6 +37,8 @@ namespace _20200921
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddIdentityCore<IdentityUser>();
 
             services.AddDbContext<StoreContext>(options =>
                 options.UseSqlite("Data Source=store.sqlite3"));
@@ -64,6 +67,8 @@ namespace _20200921
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseAuthentication();
         }
     }
 }

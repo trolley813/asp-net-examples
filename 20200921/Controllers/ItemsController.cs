@@ -20,9 +20,10 @@ namespace _20200921.Controllers
         }
 
         // GET: Items
-        public ActionResult Index()
+        public ActionResult Index(decimal? priceFrom, decimal? priceTo)
         {
-            return View(context.Items);
+            return View(context.Items.Where(item => item.Price >= (priceFrom ?? 0m) 
+                && item.Price <= (priceTo ?? Decimal.MaxValue)));
         }
 
         // GET: Items/Details/5

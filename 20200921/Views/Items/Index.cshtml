@@ -9,6 +9,13 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-action="Index" method="get">
+    <label for="priceFrom">Price from</label>
+    <input name="priceFrom" type="number" />
+    <label for="priceTo">Price to</label>
+    <input name="priceTo" type="number" />
+    <input class="btn btn-primary" type="submit"/>
+</form>
 <table class="table">
     <thead>
         <tr>
@@ -43,9 +50,9 @@
                 @Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Details", "Details", new { id=item.Id }, new { @class = "btn" })
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "btn btn-danger"})
             </td>
         </tr>
 }
