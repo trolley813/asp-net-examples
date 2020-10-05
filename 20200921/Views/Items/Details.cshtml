@@ -40,3 +40,23 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
+<h4>Reviews</h4>
+<div>
+    @if(Model.Reviews?.Any() ?? false)
+    {
+
+    }
+    else
+    {
+        <p>No reviews for this item yet.</p>
+    }
+</div>
+<div>
+    <form asp-action="AddReview" asp-route-id="@(Model.Id)">
+        <label for="score">Score:</label>
+        <input name="score" type="range" min="0" max="10"/>
+        <label for="text">Enter your review:</label>
+        <input name="text" />
+        <input type="submit" />
+    </form>
+</div>

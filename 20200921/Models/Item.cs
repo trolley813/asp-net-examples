@@ -11,5 +11,6 @@ namespace _20200921.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
+        public List<Review> Reviews { get; set; }
     }
 }

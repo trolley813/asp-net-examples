@@ -120,5 +120,21 @@ namespace _20200921.Controllers
                 return View();
             }
         }
+
+        // POST: Items/AddReview/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddReview(Guid id, IFormCollection collection)
+        {
+            try
+            {
+
+                return RedirectToAction(nameof(Details), new { id });
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Details), new { id });
+            }
+        }
     }
 }
