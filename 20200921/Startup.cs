@@ -38,10 +38,8 @@ namespace _20200921
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddIdentityCore<IdentityUser>();
-
             services.AddDbContext<StoreContext>(options =>
-                options.UseSqlite("Data Source=store.sqlite3"));
+                options.UseSqlite(Configuration.GetConnectionString("StoreContextConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +57,7 @@ namespace _20200921
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc(routes =>
@@ -67,8 +66,7 @@ namespace _20200921
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseAuthentication();
+           
         }
     }
 }
