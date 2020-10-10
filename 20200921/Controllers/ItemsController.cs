@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using _20200921.Data;
 using _20200921.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace _20200921.Controllers
@@ -13,10 +14,12 @@ namespace _20200921.Controllers
     {        
 
         private StoreContext context;
+        private UserManager<IdentityUser> userManager;
 
-        public ItemsController(StoreContext context)
+        public ItemsController(StoreContext context, UserManager<IdentityUser> userManager)
         {
             this.context = context;
+            this.userManager = userManager;
         }
 
         // GET: Items
@@ -124,16 +127,27 @@ namespace _20200921.Controllers
         // POST: Items/AddReview/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddReview(Guid id, IFormCollection collection)
+        public async Task<IActionResult> AddReview(Guid id, IFormCollection collection)
         {
             try
             {
-
+                int score = Int32.Parse(collection["Score"]);
+                string text = collection["Text"];
+                Review review = new Review {
+                    Id = Guid.NewGuid(),
+                    Item = context.Items.First(item => item.Id == id),
+                    Text = text,
+                    Score = score,
+                    User = await userManager.GetUserAsync(User)
+                };
+                context.Reviews.Add(review);
+                context.SaveChanges();
                 return RedirectToAction(nameof(Details), new { id });
             }
-            catch
+            catch(Exception ex)
             {
-                return RedirectToAction(nameof(Details), new { id });
+                //return RedirectToAction(nameof(Details), new { id });
+                return BadRequest(ex);
             }
         }
     }

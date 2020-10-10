@@ -48,6 +48,7 @@
         @foreach (Review review in Model.Reviews)
         {
         <tr>
+            <td>@(review.User)</td>
             <td>@(review.Score)</td>
             <td>@(review.Text)</td>
         </tr>
@@ -61,10 +62,10 @@
 </div>
 <div>
     <form asp-action="AddReview" asp-route-id="@(Model.Id)">
-        <label for="score">Score:</label>
-        <input name="score" type="range" min="0" max="10"/>
-        <label for="text">Enter your review:</label>
-        <input name="text" />
+        <label for="Score">Score:</label>
+        <input name="Score" type="range" min="0" max="10"/>
+        <label for="Text">Enter your review:</label>
+        <input name="Text" />
         <input type="submit" />
     </form>
 </div>
