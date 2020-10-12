@@ -7,6 +7,7 @@ using _20200921.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace _20200921.Controllers
 {
@@ -32,7 +33,12 @@ namespace _20200921.Controllers
         // GET: Items/Details/5
         public ActionResult Details(Guid id)
         {
-            return View(context.Items.Where(item => item.Id == id).First());
+            return View(context.Items                
+                .Where(item => item.Id == id)
+                .Include(item => item.Reviews)
+                .ThenInclude((Review review) => review.User)
+                .First()
+                );
         }
 
         // GET: Items/Create

@@ -18,7 +18,8 @@ namespace _20200921.Data
         {
             modelBuilder.Entity<Review>()
                 .HasOne(r => r.Item)
-                .WithMany(i => i.Reviews);
+                .WithMany(i => i.Reviews)
+                .IsRequired();
         }
     }
 }
