@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _20200921.Data;
 
-namespace _20200921.Migrations.Store
+namespace _20200921.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    [Migration("20201010060425_AddUserToReview")]
-    partial class AddUserToReview
+    [Migration("20201102154348_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,8 @@ namespace _20200921.Migrations.Store
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
@@ -39,7 +40,8 @@ namespace _20200921.Migrations.Store
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ItemId");
+                    b.Property<Guid?>("ItemId")
+                        .IsRequired();
 
                     b.Property<int>("Score");
 
@@ -98,7 +100,8 @@ namespace _20200921.Migrations.Store
                 {
                     b.HasOne("_20200921.Models.Item", "Item")
                         .WithMany("Reviews")
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()

@@ -23,7 +23,8 @@ namespace _20200921.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<decimal>("Price");
 
@@ -37,7 +38,8 @@ namespace _20200921.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid?>("ItemId");
+                    b.Property<Guid?>("ItemId")
+                        .IsRequired();
 
                     b.Property<int>("Score");
 
@@ -96,7 +98,8 @@ namespace _20200921.Migrations
                 {
                     b.HasOne("_20200921.Models.Item", "Item")
                         .WithMany("Reviews")
-                        .HasForeignKey("ItemId");
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
                         .WithMany()
