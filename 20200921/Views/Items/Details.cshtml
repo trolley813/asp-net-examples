@@ -40,10 +40,11 @@
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     <a asp-action="Index">Back to List</a>
 </div>
-<h4>Reviews (average score: @(Model.Reviews?.Average(review => review.Score) ?? 0) of @(Model.Reviews?.Count ?? 0) reviews)</h4>
+<h4>Reviews</h4>
 <div> 
     @if(Model.Reviews?.Any() ?? false)
     {
+    <h5>Average score: @(Model.Reviews.Average(review => review.Score)) of @(Model.Reviews.Count) reviews</h5>
     <table>
         @foreach (Review review in Model.Reviews)
         {

@@ -43,7 +43,7 @@ namespace _20200921
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -66,7 +66,41 @@ namespace _20200921
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRoles(services).Wait();
            
+        }
+
+        public async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            string[] roles = { "Admin", "Staff" };
+            foreach (var role in roles)
+            {
+                bool roleExists = await roleManager.RoleExistsAsync(role);
+                if (!roleExists)
+                {
+                    await roleManager.CreateAsync(new IdentityRole { Name = role });
+                }
+            }
+
+            await userManager.DeleteAsync(await userManager.FindByEmailAsync("admin@example.com"));
+
+            var user = new IdentityUser
+            {
+                UserName = "admin@example.com",
+                Email = "admin@example.com",
+            };
+
+            var password = "AdminPassword1!";
+
+            var result = await userManager.CreateAsync(user, password);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRolesAsync(user, roles);
+            }
         }
     }
 }

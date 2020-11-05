@@ -20,6 +20,7 @@ namespace _20200921.Areas.Identity
                         context.Configuration.GetConnectionString("UserContextConnection")));
 
                 services.AddDefaultIdentity<IdentityUser>()
+                    .AddRoles<IdentityRole>()
                     .AddEntityFrameworkStores<UserContext>();
             });
         }

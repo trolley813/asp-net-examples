@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using _20200921.Data;
 using _20200921.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -42,6 +43,7 @@ namespace _20200921.Controllers
         }
 
         // GET: Items/Create
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Create()
         {
             return View();
@@ -50,6 +52,7 @@ namespace _20200921.Controllers
         // POST: Items/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Create(IFormCollection collection)
         {
             try
@@ -76,6 +79,7 @@ namespace _20200921.Controllers
         }
 
         // GET: Items/Edit/5
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Edit(Guid id)
         {
             return View(context.Items.Where(item => item.Id == id).First());
@@ -84,6 +88,7 @@ namespace _20200921.Controllers
         // POST: Items/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Edit(Guid id, IFormCollection collection)
         {
             try
@@ -106,6 +111,7 @@ namespace _20200921.Controllers
         }
 
         // GET: Items/Delete/5
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Delete(Guid id)
         {
             return View(context.Items.Where(item => item.Id == id).First());
@@ -114,6 +120,7 @@ namespace _20200921.Controllers
         // POST: Items/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, Staff")]
         public ActionResult Delete(Guid id, IFormCollection collection)
         {
             try
