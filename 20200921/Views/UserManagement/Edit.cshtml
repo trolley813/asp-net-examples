@@ -1,0 +1,21 @@
+﻿@model ChangeUserViewModel
+@{
+}
+<table>
+    @foreach(var role in Model.AllRoles)
+    {
+        <tr>
+            <td>
+                @if (Model.UserRoles.Contains(role))
+                {
+                    <input type="checkbox" checked />
+                }
+                else
+                {
+                    <input type="checkbox" />
+                }
+            </td>
+            <td><b>@role</b></td>
+        </tr>
+    }
+</table>

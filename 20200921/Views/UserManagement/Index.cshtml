@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<IdentityUser>
+@{
+}
+<table class="table">
+    @foreach(var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>
+                <a class="btn btn-danger" asp-action="Edit" asp-route-id="@user.Id">Edit</a>
+            </td>
+        </tr>
+    }
+</table>
