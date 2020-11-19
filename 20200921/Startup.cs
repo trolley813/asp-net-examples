@@ -13,6 +13,9 @@ using Microsoft.EntityFrameworkCore.Sqlite;
 using _20200921.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace _20200921
 {
@@ -35,8 +38,12 @@ namespace _20200921
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
+                .AddDataAnnotationsLocalization();
+          
 
             services.AddDbContext<StoreContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("StoreContextConnection")));
@@ -54,6 +61,18 @@ namespace _20200921
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            List<CultureInfo> supportedCultures = new List<CultureInfo>
+            {
+                new CultureInfo("en"),
+                new CultureInfo("ru")
+            };
+
+            app.UseRequestLocalization(new RequestLocalizationOptions {
+                DefaultRequestCulture = new RequestCulture("ru"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            });
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
