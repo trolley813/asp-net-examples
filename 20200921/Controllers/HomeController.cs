@@ -5,11 +5,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using _20200921.Models;
+using Microsoft.Extensions.Localization;
 
 namespace _20200921.Controllers
 {
     public class HomeController : Controller
     {
+        private IStringLocalizer<HomeController> localizer;
+
+        public HomeController(IStringLocalizer<HomeController> localizer)
+        {
+            this.localizer = localizer;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -24,7 +32,7 @@ namespace _20200921.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = localizer["Your contact page."];
 
             return View();
         }
